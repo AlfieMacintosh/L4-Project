@@ -30,7 +30,13 @@ ___
 ### 28th Thursday 2023
 
 * *1 hour* Meeting with Dr Siebert, Fergus Steel and Laurie, fellow students under the supervision of Dr Siebert doing projects within the same field.
-* *1 hour* Setting up Repository, filling in Timelog and setting out intiial plan
+* *1 hour* Setting up Repository, filling in Timelog and setting out intial plan
+
+## Week 3
+
+### 4th Wednesday 2023
+
+* *0.5 hour * Configuring Visual Studio to git repository. Pushing example template to repo.
 
 
 
