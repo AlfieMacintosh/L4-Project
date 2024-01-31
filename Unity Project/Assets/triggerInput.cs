@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using UnityEngine;
+﻿using UnityEngine;
 using Valve.VR;
 
 public class triggerInput : MonoBehaviour
@@ -9,7 +8,6 @@ public class triggerInput : MonoBehaviour
     private SteamVR_Input_Sources inputSource;
     private SteamVR_Action_Boolean backTriggerAction;
 
-    private bool isRecording = false;
     private bool triggerPressed = false;
 
     private void Awake()
@@ -27,20 +25,17 @@ public class triggerInput : MonoBehaviour
             UnityEngine.Debug.Log("Trigger Down");
             if (!triggerPressed)
             {
-                isRecording = true;
                 triggerPressed = true;
 
-                if (isRecording && stimulusGenerator != null)
+                if (stimulusGenerator != null)
                 {
-                    stimulusGenerator.RecordResponse(true);
+                    stimulusGenerator.OnTriggerPulled();
                 }
             }
         }
         else if (backTriggerAction[inputSource].stateUp)
         {
             UnityEngine.Debug.Log("Trigger Up");
-
-            isRecording = false;
             triggerPressed = false;
         }
     }
