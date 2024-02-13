@@ -262,3 +262,5 @@ ___
 
 #### 13th Tuesday
 * *3 hours* Success! Eye tracking now uses eye data directly. Stimulus changes colour with new seperate script that is called when user looks at object. Also I now use mesh colliders, less efficient but more accurate.
+* *1.5 hours* Central stimulus now has three possible colours. Idle orange when the environment is waiting for you to activate scripts or testing is done. Green - testing is in progress you are looking at centre, and red - you are not looking at the centre but testing is in progress.
+* *1.5 hours* Testing now only begins when user clicks tracking pad with one of the controllers. 5 second delay. Eyetracking now also ceases when StimulusGenerator is done.
