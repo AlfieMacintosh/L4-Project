@@ -1,13 +1,18 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Diagnostics;
+using UnityEngine;
 using Valve.VR;
 using ViveSR.anipal.Eye;
 
 public class triggerInput : MonoBehaviour
 {
     public StimulusGenerator stimulusGenerator;
+    public EyeTracking eyeTracking;
+
     private SteamVR_Behaviour_Pose controllerPose;
     private SteamVR_Input_Sources inputSource;
     private SteamVR_Action_Boolean backTriggerAction;
+    private SteamVR_Action_Boolean Teleport;
 
     private bool triggerPressed = false;
 
@@ -17,13 +22,22 @@ public class triggerInput : MonoBehaviour
         inputSource = controllerPose.inputSource;
 
         backTriggerAction = SteamVR_Actions.default_InteractUI;
+
+        Teleport = SteamVR_Actions.default_Teleport;
+
+        if (eyeTracking != null)
+            eyeTracking.enabled = false;
+
+        if (stimulusGenerator != null)
+            stimulusGenerator.enabled = false;
     }
+
+
 
     private void Update()
     {
         if (backTriggerAction[inputSource].stateDown)
         {
-            UnityEngine.Debug.Log("Trigger Down");
             if (!triggerPressed)
             {
                 triggerPressed = true;
@@ -36,8 +50,32 @@ public class triggerInput : MonoBehaviour
         }
         else if (backTriggerAction[inputSource].stateUp)
         {
-            UnityEngine.Debug.Log("Trigger Up");
             triggerPressed = false;
         }
+
+        if (Teleport[inputSource].stateDown)
+        {
+            StartCoroutine(ActivateScriptsAfterDelay(5f));
+        }
+    }
+
+    private IEnumerator ActivateScriptsAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+
+        if (eyeTracking != null && !eyeTracking.enabled)
+        {
+            eyeTracking.enabled = true;
+        }
+
+        yield return new WaitForSeconds(0.01f);
+
+
+        if (stimulusGenerator != null && !stimulusGenerator.enabled)
+        {
+            stimulusGenerator.enabled = true;
+        }
+
     }
 }

@@ -7,9 +7,10 @@ using System.Diagnostics;
 
 public class StimulusGenerator : MonoBehaviour
 {
-    public GameObject stimulusPrefab;
-    public Transform semisphereTransform;
-    public string filePath; // File path to the configuration file
+    public GameObject stimulusPrefab; // prefab of stimulus to be generated
+    public Transform Canvas; // where stimulus are generated on.
+    public string filePath; // File path to the test file
+    public EyeTracking eyeTracking; // reference to the eyetracking script
 
     private int numberOfStimuli;
     private float dBStartValue;
@@ -20,9 +21,9 @@ public class StimulusGenerator : MonoBehaviour
     private bool isGenerating = false;
     private StreamWriter resultsWriter;
     private float stimulusGenerationTime;
-    private bool triggerPressed = false; // Indicates if the trigger is pressed
+    private bool triggerPressed = false;
 
-    // Start is called before the first frame update
+
     void Start()
     {
         ReadStimuliFile();
@@ -79,15 +80,22 @@ public class StimulusGenerator : MonoBehaviour
                 yield return null;
             }
         }
-
+        if(eyeTracking != null)
+        {
+            eyeTracking.StopTracking();
+        }
+        else
+        {
+            UnityEngine.Debug.Log("Problem stopping eyeTracking.StopTracking() in StimulusGenerator");
+        }
         RecordResults();
     }
 
     private GameObject CreateStimulus(Vector3 localPosition)
     {
-        Vector3 worldPosition = semisphereTransform.TransformPoint(localPosition);
+        Vector3 worldPosition = Canvas.TransformPoint(localPosition);
         GameObject stimulus = Instantiate(stimulusPrefab, worldPosition, Quaternion.identity);
-        stimulus.transform.SetParent(semisphereTransform);
+        stimulus.transform.SetParent(Canvas);
         stimulusGenerationTime = Time.time;
 
         Renderer renderer = stimulus.GetComponent<Renderer>();
@@ -103,15 +111,14 @@ public class StimulusGenerator : MonoBehaviour
     private Color dBToColor(float dBValue)
     {
         float linearValue = Mathf.Pow(10, dBValue / 10.0f);
-        float alpha = linearValue / 100.0f; // Calculate alpha based on dBValue
+        float alpha = linearValue / 100.0f;
 
-        // Clamp the alpha value to the range [0, 1]
+
         alpha = Mathf.Clamp(alpha, 0.0f, 1.0f);
 
         UnityEngine.Debug.Log($"dBValue: {dBValue}, Alpha: {alpha}");
 
-        // Use alpha for the transparency of the color
-        return new Color(1, 1, 1, 0); // RGB values are set to 1 to represent pure light
+        return new Color(1, 1, 1, 0);
     }
 
 
@@ -124,10 +131,10 @@ public class StimulusGenerator : MonoBehaviour
             float currentTime = Time.time;
             float timePassed = currentTime - stimulusGenerationTime;
 
-            // Check if the trigger was pulled within response time
+
             if (timePassed <= responseTime)
             {
-                RecordResponse(true); // Record as positive response
+                RecordResponse(true);
             }
         }
     }
@@ -153,7 +160,7 @@ public class StimulusGenerator : MonoBehaviour
         resultsWriter.Close();
     }
 
-    // Class to store stimulus information
+
     public class StimulusInfo
     {
         public int Index { get; set; }

@@ -5,7 +5,7 @@ using ViveSR.anipal.Eye;
 
 public class EyeTracking : MonoBehaviour
 {
-    public GameObject StimulusObject; // Assign the stimulus object in the inspector
+    public GameObject StimulusObject;
     private LineRenderer gazeRayRenderer;
     private readonly float MaxDistance = 20;
     private static EyeData eyeData = new EyeData();
@@ -13,11 +13,13 @@ public class EyeTracking : MonoBehaviour
     private StreamWriter outputStream;
     private string outputPath = "EyeTrackingData.txt";
     private readonly GazeIndex[] GazePriority = new GazeIndex[] { GazeIndex.COMBINE, GazeIndex.LEFT, GazeIndex.RIGHT };
+    private float startTime; // this will be used to takeaway script start time from scene start time to get actual time when script was enabled.
 
     void Start()
     {
         gazeRayRenderer = GetComponent<LineRenderer>();
         outputStream = new StreamWriter(outputPath, true);
+        startTime = Time.time;
     }
 
     private void Update()
@@ -42,17 +44,16 @@ public class EyeTracking : MonoBehaviour
         int stimulusLayerId = LayerMask.NameToLayer("stimulusToTrack");
         LayerMask layerMask = 1 << stimulusLayerId;
 
-        // Always check the combined gaze.
         GazeIndex gazeIndex = GazeIndex.COMBINE;
 
         if (eye_callback_registered)
         {
-            // Use the eye tracking data from the callback
+
             eye_focus = SRanipal_Eye.Focus(gazeIndex, out gazeRay, out focusInfo, 0, MaxDistance, layerMask, eyeData);
         }
         else
         {
-            // Use the standard method to get eye tracking data
+
             eye_focus = SRanipal_Eye.Focus(gazeIndex, out gazeRay, out focusInfo, 0, MaxDistance, layerMask);
         }
 
@@ -62,14 +63,13 @@ public class EyeTracking : MonoBehaviour
         }
         else
         {
-            HighlightObject(false); // If not focused or the StimulusObject is null
+            HighlightObject(false);
         }
 
         if (eye_focus)
         {
-            // Log hit point
-            outputStream.WriteLine($"{Time.time},{focusInfo.point.x},{focusInfo.point.y},{focusInfo.point.z}");
-            UnityEngine.Debug.Log("Focus on:" + focusInfo.transform?.name);
+            float actualTime = Time.time - startTime;
+            outputStream.WriteLine($"{actualTime},{focusInfo.point.x},{focusInfo.point.y},{focusInfo.point.z}");
         }
     }
 
@@ -94,4 +94,22 @@ public class EyeTracking : MonoBehaviour
     {
         eyeData = eye_data;
     }
+
+    public void StopTracking()
+    {
+        if (outputStream != null)
+        {
+            outputStream.Close();
+            outputStream = null;
+        }
+
+        centralStimulus centralStimulus = StimulusObject.GetComponent<centralStimulus>();
+        if (centralStimulus != null)
+        {
+            centralStimulus.Finished();
+        }
+
+        this.enabled = false;
+    }
+
 }
