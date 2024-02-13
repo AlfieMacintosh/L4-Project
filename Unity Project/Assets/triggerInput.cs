@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Valve.VR;
+using ViveSR.anipal.Eye;
 
 public class triggerInput : MonoBehaviour
 {

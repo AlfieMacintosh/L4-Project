@@ -146,7 +146,7 @@ public class StimulusGenerator : MonoBehaviour
     {
         foreach (StimulusInfo stimulusInfo in stimulusInfoList)
         {
-            string result = $"{stimulusInfo.Index} [{(stimulusInfo.Response ? 'Y' : 'N')}] [{stimulusInfo.Coordinates}]";
+            string result = $"{stimulusInfo.Index} {(stimulusInfo.Response ? 'Y' : 'N')} {stimulusInfo.Coordinates}";
             resultsWriter.WriteLine(result);
         }
 
