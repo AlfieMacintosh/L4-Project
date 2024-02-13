@@ -199,10 +199,10 @@ ___
 ### Week 15 : 25th Dec. - 31st Dec. : 2023
 * Christmas break!
 # The New Year 2024 - Semester 2
-### Week 1 : 1st Jan. - 7th Jan : 2024
+### Week 1 : 1st Jan. - 7th Jan. : 2024
 * Back home, cannot work on project without access to VR hardware. The break is nice though.
 
-### Week 2 : 8th Jan. - 14th Jan : 2024
+### Week 2 : 8th Jan. - 14th Jan. : 2024
 #### 9th Tuesday
 * *4 hours* background reading on Humphreys vision field test (HVF)
 * *2 hours* Looked into using a plane instead of a spherical object when conducting testing
@@ -215,7 +215,7 @@ ___
 #### 12th Friday
 * *3.5 hours* Went over status report with supervisor. Looking into producing a report with user data instead of using VR to alleviate eyesight problems and instead of using a HUD.
 
-## Week 3 : 15th Jan. - 21st Jan : 2024
+## Week 3 : 15th Jan. - 21st Jan. : 2024
 #### 15th Monday
 * *4.5 hours* Looked into 30-2 testing.
 * *2.5 hours* How are HVF test results formatted (greyscale, deviation graphs, fixation loss)
@@ -223,7 +223,7 @@ ___
 #### 17th Wednesday 
 * *4 hours* Started abstracting generating algorithm so it generates test dependent on a .txt file.
 
-## Week 4 : 22nd Jan. - 28th Jan : 2024
+## Week 4 : 22nd Jan. - 28th Jan. : 2024
 #### 22nd Monday
 * *3.5 hours* spent additional time looking into formatting test results, how stimuli look, size etc.
 
@@ -233,3 +233,32 @@ ___
 #### 26th Friday
 * *4 hours* abstracted test now formatted correctly. output formatted correctly to so generator and input detection should be working 
 * *1.5 hours* online meeting with supervisor
+* *0.5 hours* Meeting With Mathew Chalmers about ethics of project testing, checking to see if there are any avoidable risks.
+
+
+## Week 5 : 29th Jan. - 4th Feb. : 2024
+
+#### 31st Wednesday
+* *8 hours* Spent the entirety of the day trying to set up eye tracking us SR_Anipal. Seems to be issues with compatibility between the openVR SDK and the eyetracking SDK.
+#### 1st Thursday
+* *4 hours* Morning Spent trying to resolve the issue. Issue was with admin rights for PC, eye tracking can now be calibrated succesfully using headset.
+* *4 hours* Spent the afternoon messing about with the sample scenes to try and understand the scripts behind eye tracking as there are literally 30 or so scripts.
+#### 2nd Friday
+* *4 hours* Users gaze is now highlighted by using a 'Gaze Ray'. A line going from camera to where the are looking at until a certian specified distance.
+
+## Week 6 : 5th Feb. - 11th Feb. : 2024
+#### 7th Wednesday
+* *5 hours* Implenting hitboxes for gaze detection, does not appear to be working with Physics.Raycast (why???)
+* *1.5 hours* Group meeting with JPS and others, showcased progress with eyetracking and annoyance at why I cannot get it to detect my objects.
+
+#### 9th Friday
+* *5.5 hours* Beginning to lose sanity as eyetracking still won't pick up objects reliably. Relooking at source samples there may be another way to do it using the eye data directly.
+* * *1 hours* JPS was shown eye tracking in real-time. Could see ray, and output of co-ords of users gaze to txt. Still won't pick up objects!!!!
+
+
+## Week 7 : 12th Feb. - 18th Feb. : 2024
+#### 12th Monday
+* *3 hours* Physics.Raycast appears to be a lost cause. Might have something to do with the ray intercepting multiple object hitboxes, but even then the colour won't change as required of the objects. Spent 3 hours with little progress.
+
+#### 13th Tuesday
+* *3 hours* Success! Eye tracking now uses eye data directly. Stimulus changes colour with new seperate script that is called when user looks at object. Also I now use mesh colliders, less efficient but more accurate.
