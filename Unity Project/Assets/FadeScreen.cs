@@ -9,7 +9,6 @@ public class FadeScreen : MonoBehaviour
     public Color fadeColour;
     private Renderer rend;
 
-    // Start is called before the first frame update
     void Start()
     {
         rend = GetComponent<Renderer>();

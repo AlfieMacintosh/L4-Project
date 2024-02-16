@@ -2,43 +2,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System;
-using System.Diagnostics;
 
 public class StimulusGenerator : MonoBehaviour
 {
-    public GameObject stimulusPrefab; // prefab of stimulus to be generated
-    public Transform Canvas; // where stimulus are generated on.
-    public string filePath; // File path to the test file
-    public EyeTracking eyeTracking; // reference to the eyetracking script
+    public GameObject stimulusPrefab; // Prefab for generating stimulus objects
+    public Transform Canvas; // Plane for stimulus placement
+    public string filePath; // Path to test, defined later in Start()
+    public EyeTracking eyeTracking; // Reference to EyeTracking script
 
-    private int numberOfStimuli;
-    private float dBStartValue;
-    private float responseTime;
-    private List<Vector3> stimulusPositions = new List<Vector3>();
-    private List<StimulusInfo> stimulusInfoList = new List<StimulusInfo>();
-    private int stimuliDisplayed = 0;
-    private bool isGenerating = false;
-    private StreamWriter resultsWriter;
-    private float stimulusGenerationTime;
-    private bool triggerPressed = false;
+    private int numberOfStimuli; // Total number of stimuli to be generated, read in from file
+    private float responseTime; // 2 second response time, can be altered, read in
+    private List<Vector3> stimulusPositions = new List<Vector3>(); // Positions for stimuli generation, read in
+
+    private List<StimulusInfo> stimulusInfoList = new List<StimulusInfo>(); // Info for each stimulus, time, coords, false positive. Check StimulusInfo class at bottom for all variables and get/set methods
+    private List<FalsePositiveInfo> falsePositiveInfoList = new List<FalsePositiveInfo>(); // Similiar structure to stimusInfoList, used to track data on false positives, check bottom for class.
+    private int stimuliDisplayed = 0; // Counter for the number of stimuli displayed
+    private bool isGenerating = false; // Flag to control stimulus creation
+    private StreamWriter resultsWriter; // For logging stimulus response results
+    private StreamWriter falsePositivesWriter; // For logging false positives
+    private float stimulusGenerationTime; // Timestamp for the generation of the current stimulus
+    private float testStartTime; // Timestamp for the start of the test
+    private bool waitingForNextStimulus = false; // Flag to indicate waiting period between stimuli
+    private bool triggerPressed = false; // Flag to track the state of the trigger
 
 
     void Start()
     {
+        testStartTime = Time.time; // Record the start time of the test
         ReadStimuliFile();
-        resultsWriter = new StreamWriter("stimulus_results.txt", true);
+        resultsWriter = new StreamWriter("Data/Logs/stimulus_results.txt", true);
+        falsePositivesWriter = new StreamWriter("Data/Logs/false_positives.txt", true);
         StartCoroutine(GenerateStimuli());
     }
+
 
     private void ReadStimuliFile()
     {
         string[] lines = File.ReadAllLines(filePath);
         numberOfStimuli = int.Parse(lines[0]);
-        dBStartValue = float.Parse(lines[1]);
-        responseTime = float.Parse(lines[2]);
+        responseTime = float.Parse(lines[1]);
 
-        for (int i = 3; i < lines.Length; i++)
+        for (int i = 2; i < lines.Length; i++)
         {
             string line = lines[i].Trim('<', '>');
             string[] coords = line.Split(',');
@@ -60,6 +64,7 @@ public class StimulusGenerator : MonoBehaviour
             if (!isGenerating)
             {
                 isGenerating = true;
+                waitingForNextStimulus = false;
 
                 float randomDelay = UnityEngine.Random.Range(1.0f, 5.0f);
                 yield return new WaitForSeconds(randomDelay);
@@ -74,13 +79,16 @@ public class StimulusGenerator : MonoBehaviour
                 }
 
                 isGenerating = false;
+                waitingForNextStimulus = true;
+                yield return new WaitForSeconds(randomDelay);
+                waitingForNextStimulus = false;
             }
             else
             {
                 yield return null;
             }
         }
-        if(eyeTracking != null)
+        if (eyeTracking != null)
         {
             eyeTracking.StopTracking();
         }
@@ -98,66 +106,97 @@ public class StimulusGenerator : MonoBehaviour
         stimulus.transform.SetParent(Canvas);
         stimulusGenerationTime = Time.time;
 
-        Renderer renderer = stimulus.GetComponent<Renderer>();
-        renderer.material.color = dBToColor(dBStartValue - stimuliDisplayed);
-
         stimulusInfoList.Add(new StimulusInfo(stimuliDisplayed, false, localPosition));
 
         return stimulus;
     }
 
 
-
-    private Color dBToColor(float dBValue)
-    {
-        float linearValue = Mathf.Pow(10, dBValue / 10.0f);
-        float alpha = linearValue / 100.0f;
-
-
-        alpha = Mathf.Clamp(alpha, 0.0f, 1.0f);
-
-        UnityEngine.Debug.Log($"dBValue: {dBValue}, Alpha: {alpha}");
-
-        return new Color(1, 1, 1, 0);
-    }
-
-
-
     public void OnTriggerPulled()
     {
         triggerPressed = true;
-        if (isGenerating)
+        float currentTime = Time.time;
+
+        
+        if (isGenerating && stimuliDisplayed > 0)
         {
-            float currentTime = Time.time;
             float timePassed = currentTime - stimulusGenerationTime;
+            bool wasLookingAtStimulus = eyeTracking.IsLookingAtStimulus();
 
 
             if (timePassed <= responseTime)
             {
-                RecordResponse(true);
+                float responseTimeSinceTestStart = currentTime - testStartTime;
+                RecordResponse(true, responseTimeSinceTestStart, timePassed, wasLookingAtStimulus);
             }
         }
+        
+        else if (waitingForNextStimulus && !isGenerating)
+        {
+            float timeSinceStart = currentTime - testStartTime;
+            falsePositiveInfoList.Add(new FalsePositiveInfo(timeSinceStart));
+        }
     }
+
+
+
+
 
     public void OnTriggerReleased()
     {
         triggerPressed = false;
     }
 
-    private void RecordResponse(bool success)
+    private void RecordResponse(bool success, float responseTimeSinceTestStart, float timeSinceStimulusDisplayed, bool wasLookingAtStimulus)
     {
-        stimulusInfoList[stimuliDisplayed - 1].Response = success;
+        if (stimuliDisplayed > 0)
+        {
+            var stimulusInfo = stimulusInfoList[stimuliDisplayed - 1];
+            stimulusInfo.Response = success;
+            stimulusInfo.ResponseTimeSinceTestStart = responseTimeSinceTestStart;
+            stimulusInfo.TimeSinceStimulusDisplayed = timeSinceStimulusDisplayed;
+            stimulusInfo.WasLookingAtStimulus = wasLookingAtStimulus;
+        }
     }
+
+
 
     private void RecordResults()
     {
         foreach (StimulusInfo stimulusInfo in stimulusInfoList)
         {
-            string result = $"{stimulusInfo.Index} {(stimulusInfo.Response ? 'Y' : 'N')} {stimulusInfo.Coordinates}";
+            string result = $"{stimulusInfo.Index},{stimulusInfo.Coordinates},{stimulusInfo.Response},{stimulusInfo.ResponseTimeSinceTestStart},{stimulusInfo.TimeSinceStimulusDisplayed},{stimulusInfo.WasLookingAtStimulus}";
+
             resultsWriter.WriteLine(result);
         }
-
         resultsWriter.Close();
+
+        foreach (FalsePositiveInfo fpInfo in falsePositiveInfoList)
+        {
+            string result = $"{fpInfo.TimeSinceStart}";
+            falsePositivesWriter.WriteLine(result);
+        }
+        falsePositivesWriter.Close();
+
+    }
+
+
+
+    void OnDisable()
+    {
+        if (resultsWriter != null)
+        {
+            resultsWriter.Close();
+        }
+        if (falsePositivesWriter != null)
+        {
+            falsePositivesWriter.Close();
+        }
+    }
+
+    void OnApplicationQuit()
+    {
+        OnDisable();
     }
 
 
@@ -166,12 +205,27 @@ public class StimulusGenerator : MonoBehaviour
         public int Index { get; set; }
         public bool Response { get; set; }
         public Vector3 Coordinates { get; set; }
+        public bool FalsePositive { get; set; }
+        public float ResponseTimeSinceTestStart { get; set; }
+        public float TimeSinceStimulusDisplayed { get; set; }
+        public bool WasLookingAtStimulus { get; set; }
 
         public StimulusInfo(int index, bool response, Vector3 coordinates)
         {
             Index = index;
             Response = response;
             Coordinates = coordinates;
+        }
+    }
+
+
+    public class FalsePositiveInfo
+    {
+        public float TimeSinceStart { get; set; }
+
+        public FalsePositiveInfo(float timeSinceStart)
+        {
+            TimeSinceStart = timeSinceStart;
         }
     }
 }

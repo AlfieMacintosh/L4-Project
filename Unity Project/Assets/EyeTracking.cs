@@ -11,9 +11,10 @@ public class EyeTracking : MonoBehaviour
     private static EyeData eyeData = new EyeData();
     private bool eye_callback_registered = false;
     private StreamWriter outputStream;
-    private string outputPath = "EyeTrackingData.txt";
+    private string outputPath = "Data/Logs/EyeTrackingData.txt";
     private readonly GazeIndex[] GazePriority = new GazeIndex[] { GazeIndex.COMBINE, GazeIndex.LEFT, GazeIndex.RIGHT };
     private float startTime; // this will be used to takeaway script start time from scene start time to get actual time when script was enabled.
+    private bool looking_at_stim = false;
 
     void Start()
     {
@@ -56,9 +57,10 @@ public class EyeTracking : MonoBehaviour
 
             eye_focus = SRanipal_Eye.Focus(gazeIndex, out gazeRay, out focusInfo, 0, MaxDistance, layerMask);
         }
-
+        looking_at_stim = false;
         if (StimulusObject != null && focusInfo.transform != null && eye_focus)
         {
+            looking_at_stim = (focusInfo.transform.gameObject == StimulusObject);
             HighlightObject(eye_focus && focusInfo.transform.gameObject == StimulusObject);
         }
         else
@@ -69,7 +71,7 @@ public class EyeTracking : MonoBehaviour
         if (eye_focus)
         {
             float actualTime = Time.time - startTime;
-            outputStream.WriteLine($"{actualTime},{focusInfo.point.x},{focusInfo.point.y},{focusInfo.point.z}");
+            outputStream.WriteLine($"{actualTime},{focusInfo.point.x},{focusInfo.point.y},{focusInfo.point.z},{looking_at_stim.ToString()}");
         }
     }
 
@@ -81,6 +83,12 @@ public class EyeTracking : MonoBehaviour
             centralStimulus.Highlight(highlight);
         }
     }
+
+    public bool IsLookingAtStimulus()
+    {
+        return looking_at_stim;
+    }
+
 
     private void OnApplicationQuit()
     {
