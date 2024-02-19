@@ -25,16 +25,42 @@ public class StimulusGenerator : MonoBehaviour
     private bool waitingForNextStimulus = false; // Flag to indicate waiting period between stimuli
     private bool triggerPressed = false; // Flag to track the state of the trigger
 
+    private string logFolderPath = "Data/Logs"; // New variable to be used to log data dynamically
+    private string currentRunPath; // To be used in start to write files to new folder path
+
 
     void Start()
     {
         testStartTime = Time.time; // Record the start time of the test
+        SetupFilePath();
         ReadStimuliFile();
-        resultsWriter = new StreamWriter("Data/Logs/stimulus_results.txt", true);
-        falsePositivesWriter = new StreamWriter("Data/Logs/false_positives.txt", true);
+
+        if (eyeTracking != null)
+        {
+            eyeTracking.SetOutputPath(currentRunPath);
+        }
+
+        resultsWriter = new StreamWriter(Path.Combine(currentRunPath, "stimulus_results.txt"), true);
+        falsePositivesWriter = new StreamWriter(Path.Combine(currentRunPath, "false_positives.txt"), true);
         StartCoroutine(GenerateStimuli());
     }
 
+    private void SetupFilePath()
+    {
+        if (!Directory.Exists(logFolderPath))
+        {
+            Directory.CreateDirectory(logFolderPath);
+        }
+
+        int runNumber = 1;
+        while (Directory.Exists(Path.Combine(logFolderPath, $"run{runNumber}")))
+        {
+            runNumber++;
+        }
+
+        currentRunPath = Path.Combine(logFolderPath, $"run{runNumber}");
+        Directory.CreateDirectory(currentRunPath);
+    }
 
     private void ReadStimuliFile()
     {
@@ -66,7 +92,7 @@ public class StimulusGenerator : MonoBehaviour
                 isGenerating = true;
                 waitingForNextStimulus = false;
 
-                float randomDelay = UnityEngine.Random.Range(1.0f, 5.0f);
+                float randomDelay = UnityEngine.Random.Range(1.0f, 3.0f);
                 yield return new WaitForSeconds(randomDelay);
 
                 currentStimulus = CreateStimulus(stimulusPositions[stimuliDisplayed]);

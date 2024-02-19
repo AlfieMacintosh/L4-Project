@@ -33,12 +33,10 @@ public class centralStimulus : MonoBehaviour
 
     public void Finished()
     {
-    UnityEngine.Debug.Log("finished is called");
     if (renderer != null && idleMaterial != null)
     {
 
         renderer.SetPropertyBlock(null);
-        UnityEngine.Debug.Log("passses if xyz");
         renderer.material = idleMaterial;
     }
     }

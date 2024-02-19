@@ -19,9 +19,19 @@ public class EyeTracking : MonoBehaviour
     void Start()
     {
         gazeRayRenderer = GetComponent<LineRenderer>();
-        outputStream = new StreamWriter(outputPath, true);
         startTime = Time.time;
     }
+
+    public void SetOutputPath(string path)
+    {
+        outputPath = Path.Combine(path, "EyeTrackingData.txt");
+        if (outputStream != null)
+        {
+            outputStream.Close();
+        }
+        outputStream = new StreamWriter(outputPath, true);
+    }
+
 
     private void Update()
     {
@@ -70,8 +80,9 @@ public class EyeTracking : MonoBehaviour
 
         if (eye_focus)
         {
+            Vector3 localFocusPoint = StimulusObject.transform.InverseTransformPoint(focusInfo.point);
             float actualTime = Time.time - startTime;
-            outputStream.WriteLine($"{actualTime},{focusInfo.point.x},{focusInfo.point.y},{focusInfo.point.z},{looking_at_stim.ToString()}");
+            outputStream.WriteLine($"{actualTime},{localFocusPoint.x},{localFocusPoint.y},{looking_at_stim.ToString()}");
         }
     }
 
