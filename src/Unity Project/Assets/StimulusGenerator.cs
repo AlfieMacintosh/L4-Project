@@ -25,7 +25,7 @@ public class StimulusGenerator : MonoBehaviour
     private bool waitingForNextStimulus = false; // Flag to indicate waiting period between stimuli
     private bool triggerPressed = false; // Flag to track the state of the trigger
 
-    private string logFolderPath = "Data/Logs"; // New variable to be used to log data dynamically
+    private string logFolderPath = "../../data"; // New variable to be used to log data dynamically
     private string currentRunPath; // To be used in start to write files to new folder path
 
 
@@ -37,11 +37,11 @@ public class StimulusGenerator : MonoBehaviour
 
         if (eyeTracking != null)
         {
-            eyeTracking.SetOutputPath(currentRunPath);
+            eyeTracking.SetOutputPath(Path.Combine(currentRunPath, "raw"));
         }
 
-        resultsWriter = new StreamWriter(Path.Combine(currentRunPath, "stimulus_results.txt"), true);
-        falsePositivesWriter = new StreamWriter(Path.Combine(currentRunPath, "false_positives.txt"), true);
+        resultsWriter = new StreamWriter(Path.Combine(currentRunPath, "raw", "stimulus_results.txt"), true);
+        falsePositivesWriter = new StreamWriter(Path.Combine(currentRunPath, "raw", "false_positives.txt"), true);
         StartCoroutine(GenerateStimuli());
     }
 
@@ -60,6 +60,10 @@ public class StimulusGenerator : MonoBehaviour
 
         currentRunPath = Path.Combine(logFolderPath, $"run{runNumber}");
         Directory.CreateDirectory(currentRunPath);
+
+        Directory.CreateDirectory(Path.Combine(currentRunPath, "processed"));
+        Directory.CreateDirectory(Path.Combine(currentRunPath, "raw"));
+        Directory.CreateDirectory(Path.Combine(currentRunPath, "reports"));
     }
 
     private void ReadStimuliFile()
