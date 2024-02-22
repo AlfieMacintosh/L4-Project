@@ -19,8 +19,11 @@ public class StimulusGenerator : MonoBehaviour
     private List<FalsePositiveInfo> falsePositiveInfoList = new List<FalsePositiveInfo>(); // Similiar structure to stimusInfoList, used to track data on false positives, check bottom for class.
     private int stimuliDisplayed = 0; // Counter for the number of stimuli displayed
     private bool isGenerating = false; // Flag to control stimulus creation
+
     private StreamWriter resultsWriter; // For logging stimulus response results
     private StreamWriter falsePositivesWriter; // For logging false positives
+    private StreamWriter testInfoWriter; // For logging test info. Stim type, test env, display time, etc...
+
     private float stimulusGenerationTime; // Timestamp for the generation of the current stimulus
     private float testStartTime; // Timestamp for the start of the test
     private bool waitingForNextStimulus = false; // Flag to indicate waiting period between stimuli
@@ -49,6 +52,7 @@ public class StimulusGenerator : MonoBehaviour
 
         resultsWriter = new StreamWriter(Path.Combine(currentRunPath, "raw", "stimulus_results.txt"), true);
         falsePositivesWriter = new StreamWriter(Path.Combine(currentRunPath, "raw", "false_positives.txt"), true);
+        testInfoWriter = new StreamWriter(Path.Combine(currentRunPath, "raw", "test_info.txt"), true);
         StartCoroutine(GenerateStimuli());
     }
 
@@ -137,7 +141,7 @@ public class StimulusGenerator : MonoBehaviour
 
         if (reportScripts != null)
         {
-            reportScripts.RunPythonScriptsSequence();
+            StartCoroutine(reportScripts.RunPythonScriptsSequence());
         }
     }
 
@@ -206,6 +210,8 @@ public class StimulusGenerator : MonoBehaviour
 
     private void RecordResults()
     {
+        float currentTimeRR = Time.time;
+        resultsWriter.WriteLine(currentTimeRR);
         foreach (StimulusInfo stimulusInfo in stimulusInfoList)
         {
             string result = $"{stimulusInfo.Index},{stimulusInfo.Coordinates},{stimulusInfo.Response},{stimulusInfo.ResponseTimeSinceTestStart},{stimulusInfo.TimeSinceStimulusDisplayed},{stimulusInfo.WasLookingAtStimulus}";
@@ -221,6 +227,9 @@ public class StimulusGenerator : MonoBehaviour
         }
         falsePositivesWriter.Close();
 
+        string information = $"{stimulusPrefab.name}, {Canvas.name}, {responseTime}";
+        testInfoWriter.Write(information); 
+        testInfoWriter.Close();
     }
 
 
@@ -234,6 +243,10 @@ public class StimulusGenerator : MonoBehaviour
         if (falsePositivesWriter != null)
         {
             falsePositivesWriter.Close();
+        }
+        if (testInfoWriter != null)
+        {
+            testInfoWriter.Close();
         }
     }
 

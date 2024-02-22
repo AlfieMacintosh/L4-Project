@@ -13,7 +13,9 @@ file_path = os.path.join(file_path_default, "stimulus_results.txt")
 data = []
 
 with open(file_path, 'r') as file:
-    for line in file:
+    for i,line in enumerate(file):
+        if i==0:
+            continue
         fields = line.strip().split(',')
         fields[1], fields[3] = fields[1].strip('('), fields[3].strip(' )')
         del fields[2]

@@ -14,7 +14,7 @@ public class ReportScripts : MonoBehaviour
         dataPath = path;
     }
 
-    public void RunPythonScriptsSequence()
+    public IEnumerator RunPythonScriptsSequence()
     {
         string pythonPath = @"C:\Program Files\Python38\python.exe";
         List<string> scriptsToRun = new List<string>
@@ -22,14 +22,15 @@ public class ReportScripts : MonoBehaviour
             "heatmap.py",
             "grayscale.py",
             "invalid.py"
-
-            // Add other scripts as needed, like "grayscale.py"
         };
 
         foreach (string scriptName in scriptsToRun)
         {
             RunPythonScript(pythonPath, scriptName);
         }
+
+        yield return new WaitForSeconds(2);
+        RunPythonScript(pythonPath, "pdf_generator.py");
     }
 
     private void RunPythonScript(string pythonPath, string scriptName)
@@ -49,7 +50,6 @@ public class ReportScripts : MonoBehaviour
 
         using (Process process = Process.Start(psi))
         {
-            // Read the output stream first and then wait.
             string output = process.StandardOutput.ReadToEnd();
             string error = process.StandardError.ReadToEnd();
 

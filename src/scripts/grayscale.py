@@ -9,16 +9,18 @@ from matplotlib.cm import ScalarMappable
 file_path_default = sys.argv[1]
 
 file_path = os.path.join(file_path_default, "stimulus_results.txt")
-print("Grayscale:",file_path)
+
+
 data = []
 
 with open(file_path, 'r') as file:
-    for line in file:
+    for i,line in enumerate(file):
+        if i==0:
+            continue
         fields = line.strip().split(',')
         fields[1], fields[3] = fields[1].strip('('), fields[3].strip(' )')
         del fields[2]
         data.append(fields)
-print(data)
 
 
 valid_points = {}

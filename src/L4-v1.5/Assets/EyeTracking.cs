@@ -30,6 +30,7 @@ public class EyeTracking : MonoBehaviour
             outputStream.Close();
         }
         outputStream = new StreamWriter(outputPath, true);
+        outputStream.WriteLine($"{StimulusObject.name}");
     }
 
 

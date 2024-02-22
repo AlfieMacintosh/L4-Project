@@ -8,7 +8,7 @@ file_path_default = sys.argv[1]
 
 file_path = os.path.join(file_path_default, "EyeTrackingData.txt")
 
-data = pd.read_csv(file_path, header=None, names=['Time', 'X', 'Y', 'LookingAtStim'])
+data = pd.read_csv(file_path, header=None, names=['Time', 'X', 'Y', 'LookingAtStim'], skiprows=1)
 data['LookingAtStim'] = data['LookingAtStim'].astype(bool)
 
 plt.figure(figsize=(8, 6))
