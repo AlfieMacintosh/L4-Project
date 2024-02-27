@@ -45,6 +45,8 @@ def generate_data(file_path_default):
             stimulus_response_data.append(fields)
 
 
+
+
     false_positive_rate = len(false_positives) / len(stimulus_response_data) * 100
 
     point_tracker = {}
@@ -62,7 +64,7 @@ def generate_data(file_path_default):
 
 
     total_points = len(stimulus_response_data)
-    points_hit = sum(1 for data in stimulus_response_data if data[2] == 'True')
+    points_hit = sum(1 for data in stimulus_response_data if data[3] == 'True')
 
     valid_points_hit = sum(1 for point, stats in point_tracker.items() if stats['valid'] and stats['seen'] > 0)       
 
@@ -74,7 +76,7 @@ def generate_data(file_path_default):
     reaction_times = [float(data[5]) for data in stimulus_response_data if data[3] == 'True']
     avg_reaction_time = 0
     if reaction_times:
-        avg_reaction_time = statistics.mean(reaction_times) * 100
+        avg_reaction_time = statistics.mean(reaction_times) * 1000
 
     current_date = datetime.now().strftime('%Y-%m-%d')
     current_time = datetime.now().strftime('%H:%M:%S')
@@ -87,7 +89,7 @@ def generate_data(file_path_default):
         'False Positive Error Rate': f"{false_positive_rate:.2f}%",
         'False Negative Error Rate': f"{false_negative_rate:.2f}%",
         'Points Hit / Total Points': f"{points_hit}/{total_points}",
-        'Valid Points Hit / Total Points': f"{valid_points_hit}/{total_valid_points}",
+        'Valid Points Hit / Total Points': f"{valid_points_hit}/{total_points}",
         'Average Reaction Time': f"{avg_reaction_time:.2f} ms" if avg_reaction_time else "N/A",
     }
     return results,test_info
@@ -118,7 +120,7 @@ def create_pdf(file_path_default, data, test_info):
     c.setFont("Helvetica-Bold", 14)
     c.drawString(40, height - 100, "Stim Info")
     c.setFont("Helvetica", 12)
-    stim_info = ["Type: " + test_info[0], "Canvas: " + test_info[1], "Display Time: " + f"{float(test_info[2])/100}ms"]
+    stim_info = ["Type: " + test_info[0], "Canvas: " + test_info[1], "Display Time: " + f"{float(test_info[2])*100}ms"]
     for i, info in enumerate(stim_info):
         c.drawString(40, height - 120 - (20 * i), info)
 

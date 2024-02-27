@@ -69,7 +69,7 @@ for x in np.arange(np.floor(x_min), np.ceil(x_max) + 1):
 plt.xticks(np.arange(np.floor(x_min), np.ceil(x_max)+1, 1.0))
 plt.yticks(np.arange(np.floor(y_min), np.ceil(y_max)+1, 1.0))
 
-
+plt.gca().set_facecolor((0.95, 0.95, 0.95))
 plt.title('Grayscale Graph of Valid Observations')
 plt.xlabel('X Coordinate')
 plt.ylabel('Y Coordinate')
