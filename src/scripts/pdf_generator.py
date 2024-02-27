@@ -33,6 +33,12 @@ def generate_data(file_path_default):
     with open(eye_info_path, 'r') as file:
         fixation_point = file.readline().strip()
 
+    eye_data = []
+    with open(eye_info_path, 'r') as file:
+        for i,line in enumerate(file):
+            if i==0:
+                continue
+            eye_data.append(line.strip().split(','))
     
     stimulus_response_data = []
     with open(stim_info_path, 'r') as file:
@@ -44,7 +50,8 @@ def generate_data(file_path_default):
             del fields[2]
             stimulus_response_data.append(fields)
 
-
+    centre_true_count = sum([1 for item in eye_data if item[3] == 'True'])
+    percentage_centre_true = (centre_true_count / len(eye_data)) * 100 if len(eye_data) > 0 else 0
 
 
     false_positive_rate = len(false_positives) / len(stimulus_response_data) * 100
@@ -91,6 +98,7 @@ def generate_data(file_path_default):
         'Points Hit / Total Points': f"{points_hit}/{total_points}",
         'Valid Points Hit / Total Points': f"{valid_points_hit}/{total_points}",
         'Average Reaction Time': f"{avg_reaction_time:.2f} ms" if avg_reaction_time else "N/A",
+        'Centre True Perc' : f"{percentage_centre_true:.2f}%",
     }
     return results,test_info
     
@@ -141,7 +149,8 @@ def create_pdf(file_path_default, data, test_info):
         f"False Negative Error Rate: {data['False Negative Error Rate']}",
         f"Average Reaction Time: {data['Average Reaction Time']}",
         f"Stimulus Entry / Total Stimulus: {data['Points Hit / Total Points']}",
-        f"Valid Stimulus Entry / Total Stimulus: {data['Valid Points Hit / Total Points']}"
+        f"Valid Stimulus Entry / Total Stimulus: {data['Valid Points Hit / Total Points']}",
+        f"Time looked at Centre: {data['Centre True Perc']}",
     ]
     c.setFont("Helvetica", 12)
     for i, metric in enumerate(metrics):
