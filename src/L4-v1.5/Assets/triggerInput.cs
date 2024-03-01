@@ -16,7 +16,7 @@ public class triggerInput : MonoBehaviour
 
     private bool triggerPressed = false;
 
-    private void Awake()
+    private void Awake() // sets up controls and disables eyetrackig and stimulusgenerator until re-enabled in update
     {
         controllerPose = GetComponentInParent<SteamVR_Behaviour_Pose>();
         inputSource = controllerPose.inputSource;
@@ -34,7 +34,7 @@ public class triggerInput : MonoBehaviour
 
 
 
-    private void Update()
+    private void Update() // called each frame, if trigger down, signal is sent to stimulusgenerator
     {
         if (backTriggerAction[inputSource].stateDown)
         {
@@ -59,7 +59,7 @@ public class triggerInput : MonoBehaviour
         }
     }
 
-    private IEnumerator ActivateScriptsAfterDelay(float delay)
+    private IEnumerator ActivateScriptsAfterDelay(float delay) // used to enable scripts at start using centre button
     {
         yield return new WaitForSeconds(delay);
 

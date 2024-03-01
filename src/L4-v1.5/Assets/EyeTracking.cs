@@ -34,7 +34,7 @@ public class EyeTracking : MonoBehaviour
     }
 
 
-    private void Update()
+    private void Update() // called each frame, firstly checks eyetracking status is okay before logging any contact of ray gaze to raw eyetrackingdata.txt, also calls centralstimulus script to change colour
     {
         if (SRanipal_Eye_Framework.Status != SRanipal_Eye_Framework.FrameworkStatus.WORKING &&
             SRanipal_Eye_Framework.Status != SRanipal_Eye_Framework.FrameworkStatus.NOT_SUPPORT) return;

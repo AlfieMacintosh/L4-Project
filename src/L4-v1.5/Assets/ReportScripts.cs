@@ -17,7 +17,7 @@ public class ReportScripts : MonoBehaviour
     public IEnumerator RunPythonScriptsSequence()
     {
         string pythonPath = @"C:\Program Files\Python38\python.exe";
-        List<string> scriptsToRun = new List<string>
+        List<string> scriptsToRun = new List<string> // used to list scripts to run in RunPythonScript function, can be altered if needed
         {
             "heatmap.py",
             "grayscale.py",
@@ -30,7 +30,7 @@ public class ReportScripts : MonoBehaviour
         }
 
         yield return new WaitForSeconds(2);
-        RunPythonScript(pythonPath, "pdf_generator.py");
+        RunPythonScript(pythonPath, "pdf_generator.py"); // call to generate pdf report, wait time of two seconds as graphs need to be generated
     }
 
     private void RunPythonScript(string pythonPath, string scriptName)

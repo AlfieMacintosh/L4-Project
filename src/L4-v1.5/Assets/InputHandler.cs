@@ -18,13 +18,21 @@ public class InputHandler : MonoBehaviour
 
     public void PointerClick(object sender, PointerEventArgs e)
     {
-        if (e.target.name == "testing_button")
+        if (e.target.name == "Test")
         {
-            sceneTransitionManager.GoToScene(1);
+            sceneTransitionManager.GoToScene(1); // useful function that allows user to traverse scenes. Scene id's can be found in file-> build settings
         }
-        else if (e.target.name == "Overlay_button")
+        if (e.target.name == "Test_NoFeedback")
         {
-            sceneTransitionManager.GoToScene(2);
+            sceneTransitionManager.GoToScene(2); // useful function that allows user to traverse scenes. Scene id's can be found in file-> build settings
+        }
+        if (e.target.name == "SH_Test")
+        {
+            sceneTransitionManager.GoToScene(3); // useful function that allows user to traverse scenes. Scene id's can be found in file-> build settings
+        }
+        if (e.target.name == "SH_NoFeedback")
+        {
+            sceneTransitionManager.GoToScene(4); // useful function that allows user to traverse scenes. Scene id's can be found in file-> build settings
         }
     }
 }
