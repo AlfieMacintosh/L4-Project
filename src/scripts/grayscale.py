@@ -7,12 +7,10 @@ import matplotlib.colors as mcolors
 from matplotlib.cm import ScalarMappable
 
 file_path_default = sys.argv[1]
-
+#file_path_default = 'C:/users/alfie/Unity Projects/Repo Format/data/runs/Participant N/EYE: Left||right/raw/'
 file_path = os.path.join(file_path_default, "stimulus_results.txt")
 
-
 data = []
-
 with open(file_path, 'r') as file:
     for i,line in enumerate(file):
         if i==0:
@@ -22,16 +20,16 @@ with open(file_path, 'r') as file:
         del fields[2]
         data.append(fields)
 
-
+print(data)
 valid_points = {}
 for index, x, y, seen_stimulus, time_since_test_start, reaction_time, was_looking_at_centre in data:
-    if was_looking_at_centre == 'True':
+    if was_looking_at_centre != None:
         key = (float(x), float(y))
         if key not in valid_points:
             valid_points[key] = 0
         if seen_stimulus == 'True':
             valid_points[key] += 1
-
+print(len(valid_points))
 x_vals, y_vals, colors = [], [], []
 for (x, y), count in valid_points.items():
     x_vals.append(x)
@@ -44,7 +42,7 @@ for (x, y), count in valid_points.items():
         colors.append('darkgray')
     else:
         colors.append('black')
-
+        
 plt.figure(figsize=(8, 6))
 
 square_half_width = 0.7 / 2
@@ -65,12 +63,14 @@ for y in np.arange(np.floor(y_min), np.ceil(y_max) + 1):
     plt.plot([-0.1, 0.1], [y, y], color='black', linewidth=1, zorder=4)
 for x in np.arange(np.floor(x_min), np.ceil(x_max) + 1):
     plt.plot([x, x], [-0.1, 0.1], color='black', linewidth=1, zorder=4)
+    
+print(f"Data points with count 0: {sum(1 for c in colors if c == 'black')}")
 
 plt.xticks(np.arange(np.floor(x_min), np.ceil(x_max)+1, 1.0))
 plt.yticks(np.arange(np.floor(y_min), np.ceil(y_max)+1, 1.0))
 
 plt.gca().set_facecolor((0.95, 0.95, 0.95))
-plt.title('Grayscale Graph of Valid Observations')
+plt.title('Grayscale Graph of Observations')
 plt.xlabel('X Coordinate')
 plt.ylabel('Y Coordinate')
 plt.xlim(x_min - 1, x_max + 1)

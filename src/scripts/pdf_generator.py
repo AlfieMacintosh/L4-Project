@@ -180,8 +180,3 @@ def create_pdf(file_path_default, data, test_info):
 file_path_default = sys.argv[1]
 data,test_info = generate_data(file_path_default)
 create_pdf(file_path_default,data,test_info)
-
-
-
-
-
