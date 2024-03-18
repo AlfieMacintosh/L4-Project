@@ -20,7 +20,6 @@ with open(file_path, 'r') as file:
         del fields[2]
         data.append(fields)
 
-print(data)
 valid_points = {}
 for index, x, y, seen_stimulus, time_since_test_start, reaction_time, was_looking_at_centre in data:
     if was_looking_at_centre != None:
@@ -29,7 +28,6 @@ for index, x, y, seen_stimulus, time_since_test_start, reaction_time, was_lookin
             valid_points[key] = 0
         if seen_stimulus == 'True':
             valid_points[key] += 1
-print(len(valid_points))
 x_vals, y_vals, colors = [], [], []
 for (x, y), count in valid_points.items():
     x_vals.append(x)
@@ -64,7 +62,6 @@ for y in np.arange(np.floor(y_min), np.ceil(y_max) + 1):
 for x in np.arange(np.floor(x_min), np.ceil(x_max) + 1):
     plt.plot([x, x], [-0.1, 0.1], color='black', linewidth=1, zorder=4)
     
-print(f"Data points with count 0: {sum(1 for c in colors if c == 'black')}")
 
 plt.xticks(np.arange(np.floor(x_min), np.ceil(x_max)+1, 1.0))
 plt.yticks(np.arange(np.floor(y_min), np.ceil(y_max)+1, 1.0))
