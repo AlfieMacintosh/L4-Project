@@ -292,4 +292,3 @@ textfont=it,tableposition=above]{caption}
       \partopsep=0pt plus 1pt minus 1pt
       \parsep=1pt plus 1pt
       \itemsep=\parsep}
-
