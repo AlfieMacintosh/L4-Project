@@ -206,7 +206,7 @@ Ultimately, the diagnostician uses all visuals included in the report to make an
 
 
 \subsection{Visual Field Testing with Hemianopia} \label{background:VFT_Hemianopia}
-The \citet{BIOS2016VisualFieldLoss}  describe Hemianopia as a visual field defect, most commonly caused by strokes, lesions or tumours. Homonymous Hemianopia, the most common type, refers to the complete loss of visual field on the left or right side of the patients view of each eye (see \ref{appendix:hemianopia} for further information on homonymous hemianopia). Defects of the visual field are typically diagnosed by a method called confrontation, however \citet{Pandit2001VisualFields} demonstrate that confrontation tests have a lower sensitivity compared to automated perimetry. MRI's are the most common diagnostic test for homonymous hemianopia however a complete evaluation of the visual system is recommended, including a visual field test to highlight any visual field defects \citep{NANOS2021HomonymousHemianopia}
+The \citet{BIOS2016VisualFieldLoss}  describe Hemianopia as a visual field defect, most commonly caused by strokes, lesions or tumors. Homonymous Hemianopia, the most common type, refers to the complete loss of visual field on the left or right side of the patients view of each eye. Defects of the visual field are typically diagnosed by a method called confrontation, however \citet{Pandit2001VisualFields} demonstrate that confrontation tests have a lower sensitivity compared to automated perimetry. MRI's are the most common diagnostic test for homonymous hemianopia however a complete evaluation of the visual system is recommended, including a visual field test to highlight any visual field defects \citep{NANOS2021HomonymousHemianopia}
 
 \citet{Kedar2011VisualFields} argue, although there are very few clear guidelines for the performance and interpretation of visual fields in neuro-ophthalmic disorders, a visual field test for patients with symptoms serve an important purpose:
 \begin{enumerate}
@@ -698,6 +698,23 @@ This chapter laid out our practical implementation of our research project cover
 %==================================================================================================================================
 \chapter{Evaluation} 
 In this chapter, we outline our experimental procedure used to evaluate the visual field test in VR with the aim of answering our research question proposed in Chapter 1. We present the results of our user study and experiment and discuss how these answer our question and relate to wider literature.
+
+\section{Guidance}
+\begin{itemize}
+    \item How good is your solution? How well did you solve the general problem, and what evidence do you have to support that?
+    \item
+        Ask specific questions that address the general problem.
+    \item
+        Answer them with precise evidence (graphs, numbers, statistical
+        analysis, qualitative analysis).
+    \item
+        Be fair and be scientific.
+    \item
+        The key thing is to show that you know how to evaluate your work, not
+        that your work is the most amazing product ever.
+\end{itemize}
+
+
 \section{User Evaluation}
 Due to the intended use of this virtual reality system as a visual field testing program it was important to understand the usability of this system through a user evaluation. The primary objective of of this section is to identify any potential usability challenges with the current system as well as gather feedback on the overall user experience. Additionally, we can use the test results gathered from our users in this evaluation to compare and analyse our test conditions in Section \ref{evaluation:Visual_Feedback}. Our evaluation was conducted on eight undergraduate students with non having experience of a visual field test of any kind. Additionally we collected responses from an individual study with a participant with right-side homonymous hemianopia (Background: \ref{background:VFT_Hemianopia}, and Individual Study: \ref{individual_study}).
 \subsection{Methodology}
@@ -766,6 +783,7 @@ In Phase 1 a significant portion of participants experienced some level of gener
 \end{table}
 
 Symptoms such as sweating, apathy and  headaches were all recorded by no more than two participants each in both phases. Furthermore, nausea was recorded in Phase 2 as 'often' by one participant. The results appear so show symptoms of cybersickness were prevalent throughout testing, especially eye strain and general discomfort. However, due to our small sample size we cannot definitively conclude that the prevalence of these symptoms are accurately represented in our findings. To see the full results graph of symptoms from our participants please consult \ref{fig:symptoms}.
+\newpage
 \subsection{Test Equipment Comfort}
 In this section we will discuss the comfortability of the headset based off the results collected in our user evaluation. We aim to understand user comfort as it contributes to overall usability of our project and is especially important as user discomfort could lead to distraction amongst our participants during testing. Using Figure \ref{fig:comfort_1} and \ref{fig:comfort_2} we compare reported comfort of both our HMD and eye patch during testing.
 \begin{figure}[htbp]
@@ -821,80 +839,48 @@ With these, and we can conduct a t-test to determine if there is a statistically
     \centering
     \includegraphics[width=1\linewidth]{dissertation/images/Results.png}    
 
-    \caption{A table of results from both tests P1-P8. Excluding Individual Study.}
+    \caption{A table of results. Includes metrics from P1-P8. Excluding Individual Study.}
     \label{fig:results} 
 \end{figure}
 \newline
-We can use the results from our participants tests in Figure \ref{fig:results} to calculate the mean ($\mu$) and standard deviation ($\sigma$) of valid points acorss each test condition -recall a valid point is a point where the user is looking at the centre when they identify that respective point. We can use these values to compute our t-test value. \newline
+We can use results from Figure \ref{fig:results} to calculate mean ($\mu$) and standard deviation ($\sigma$) to compute our t-test value. \newline
 \newline
 $Mean_{VF}: 98.21034273 \newline 
 Mean_{NVF}: 91.91749228 \newline
 \newline
 Standard Deviation_{VF}: 2.599364617 \newline
-Standard Deviation_{NVF}: 8.780507569$
-\newline
-\newline
+Standard Deviation_{NVF}: 8.780507569 
+$
+
 Given the results from these calculations we conclude that our \textbf{t-test equals: 1.943705608}. As degrees of freedom (df) is equal to:
 $df = n_1 + n_2 -2$
 we can use our degrees of freedom (df=6), our one-tailed t-test ($\alpha$) and our significance level (0.05) to consult a T-Distribution table of critical values\footnote{https://statisticsbyjim.com/hypothesis-testing/t-distribution-table/} to find the critical value.
 
 Given the critical value is: 1.943, and our t-value was: 1.944 (3 s.f.) we can reject the null hypothesis and conclude that there is a statistically significant difference in the mean percentage of valid response between the condition with visual feedback and the condition without visual feedback at the 0.05 significance level. Specifically, the mean percentage of valid responses in the condition with visual feedback is statistically significantly  greater than the mean percentage in the condition without visual feedback.
 
-However, it is important to understand the limitations that are present in this study. Firstly, the sample size is relatively small with only 8 participants or 16 tests being conducted (one test per eye). A larger sample size would provide greater statistical power, and would likely enhance the robustness of our study. Furthermore, all eight participants were of similar age and background (19-22 years of age and undergraduate students respectively, with no eye conditions) and as such this studies findings may not be representative of the wider population, specifically for users with neuro-ophthalmological conditions such as our participant from our individual study.
+However, it is important to understand the limitations that are present in this study. Firstly, the sample size is relatively small with only 8 participants or 16 tests being conducted (one test per eye). A larger sample size would provide greater statistical power, and would likely enhance the robustness of our study. Furthermore, all eight participants were of similar age and background (19-22, undergraduate students respectively with no eye conditions) and as such this studies findings may not be Representative of the wider population, specifically for users with neuro-ophthalmological conditions such as our participant from our individual study.
 
 
-Continuing, looking at Table \ref{table:mean_false_values} we can see the mean of our test false positives, false negatives and 'Time looked at centre (\%)'  across both conditions.
-\begin{table}[h]
-    \centering
-    \caption{Mean values of validity metrics across both test conditions.}
-    \label{table:mean_false_values}
-    \begin{tabular}{|c|c|c|c|}
-        \hline
-        \textbf{Test Condition} & False-Positive (\%) & False-Negative (\%) & Time looked at centre (\%) \\
-        \hline
-        Visual Feedback & 5.05 & 13.65 & 98.34\\
-        \hline
-        No Visual Feedback & 5.53 & 7.28 & 91.92\\
-        \hline
-    \end{tabular}
-\end{table}
-
-Its important to recall what each means. A false-positive, commonly referred to as 'trigger-happy', implies the user identified a stimulus when nothing was present. A false-negative, implies the user did not identify a stimulus they had seen earlier. Finally 'time looked at centre (\%)' uses data from eye-tracking to quantify the duration of the test the user was looking at the centre point as instructed.  
 
 
-We hypothesised in Chapter 3 that our feedback would improve test validity which is commonly measured using false-positives and false-negatives. We further included time looking at centre (fixation rate). We can see our false-positive rate appears slightly lower in our condition with visual feedback (5.05\%) compared to our condition without visual feedback (5.53\%) although this is a relatively small difference and it is hard to draw solid conclusions from our small sample size. Conversely, the false-negative rate is notably higher in the condition with visual feedback at 13.65\% compared to our condition without visual feedback at 7.28\%. This implies that participants in the visual feedback condition were more likely to miss stimuli they had seen, suggesting that the feedback could cause distraction or users have a stronger cognitive focus on the feedback mechanism rather than the stimuli due to its presence. Even when removing P4 (VF) who had an outlier false-negative rate of 34.62\% - which is greater than the recommended 33\% rate at which point a test should be invalidated we get a mean of 10.65\%. This implies that our higher false-negative rate is not due to outliers but the potential distraction the feedback mechanism causes. Finally, we explore the difference in the fixation rate (time looked at centre). The difference between our visual feedback condition (98.34\%) and without visual feedback (91.92\%) was relatively high at 6.42\%. This suggests that participants in the visual feedback condition adhered more closely to their instructed task of maintaining focus on the centre point, potentially due to the visual cues provided. 
 
-With the results of our t-test supporting our alternative hypothesis, indicating that visual feedback during user testing leads to a statistically significant increase in the mean percentage of valid responses compared to testing without visual feedback, we suggest that incorporating real-time feedback into test procedure can enhance the validity of testing results. Furthermore, given the difference in fixation rates, we conclude that visual feedback is a useful addition in visual field testing in a virtual reality environment. We do note a potential trade-off between the fixation-rate and false-negatives, where the visual feedback does increase user compliance when instructed to look at the centre, but it may distract users sufficiently to miss stimuli in locations they had previously identified.
-
-Further research is required, potentially with a larger participant number, to explore if our t-test result holds. Furthermore, we could not draw any conclusions from our false-positive rate due to the small difference between both test conditions.  
-
+[SUMMARY BELOW]
+With the results of our t-test supporting our alternative hypothesis, indicating that visual feedback during user testing leads to a statistically significant increase in the mean percentage of valid responses compared to testing without visual feedback, we suggest that incorporating real-time feedback into test procedure can enhance the validity of testing results. 
+Make sure you present your evidence well. Use appropriate visualisations, reporting techniques and statistical analysis, as appropriate.
 
 \section{Individual Case Study} \label{individual_study}
-Finally we explore the results gathered from our individual case study. Our participant had right-side homonymous hemianopia. For further information on right-side homonymous hemianopia please refer to \ref{appendix:hemianopia}. For further information on visual field testing with hemianopia please refer to \ref{background:VFT_Hemianopia}. We conducted an individual study to see how our it would function with a a user with a neuro-ophthalmological condition. Due to their condition they were familiar with the methodology of visual field testing. 
-\begin{figure}[htbp]
-    \centering
-    \begin{subfigure}[b]{0.49\textwidth}
-        \includegraphics[width=\textwidth]{dissertation/images/standalone_left_gs.png}
-        \caption{Gray scale from standalone participants left eye.}
-        \label{fig:standalone_left_gs}
-    \end{subfigure}
-    ~
-    \begin{subfigure}[b]{0.49\textwidth}
-        \includegraphics[width=\textwidth]{dissertation/images/sample_left_gs.png}
-        \caption{Sample gray scale from the left eye. Retrieved from \citet{perez2014rehabilitation}.}
-        \label{fig:sample_left_gs}
-    \end{subfigure}
-    ~  
-    \caption{Comparison of gray scale graphs. \subref{fig:standalone_left_gs} shares various characteristics with the sample in \subref{fig:sample_left_gs}. Both are of individuals with right-side homonymous hemianopia.}\label{fig:gs_comparison}
-\end{figure}
-\newline
-We can see there are a number of shared characteristics between our gray scale graph and our sample in Figure \ref{fig:gs_comparison}. Both share the same notation, where a black spot represents lack of registered stimuli, and a white showcases that the user picked up on stimuli. In our instance a dark gray represents two missed stimuli, a light gray one, and a white none. The most notable shared characteristic between each figure, is the lack of registered stimuli in the right sector of the eye. We see in our graph that there is a ring of missed stimuli around the top, curving to the left. This is likely due to the headset configuration, depending on the users requirements a tighter headset might mean they are unable to see and thus register a number of outer stimuli. This is an inherent flaw, and would require work to scale the test to the users actual FOV depending on facial structure and headset configuration. 
+If you visualise, follow the basic rules, as illustrated in Figure 
+\begin{itemize}
+\item Label everything correctly (axis, title, units).
+\item Caption thoroughly.
+\item Reference in text.
+\item \textbf{Include appropriate display of uncertainty (e.g. error bars, Box plot)}
+\item Minimise clutter.
+\end{itemize}
 
-The standalone user conducted a test with visual feedback (see \ref{full_individual_study} for full report). They had a mean fixation rate of 94.6\%, false-positive rate of 3.53\% and a false-negative rate of 15.48\% across both of their eyes. The last two metrics are inline with acceptable rates (see \ref{validty-metrics}) and the test is considered valid by standard means. We can see the user kept a high fixation rate, even with their condition implying that the test methodology was usable. Furthermore, the user reported possibly seeing a stimulus in the top right quadrant of both eyes, and indeed did identify such in both eyes, however with a false-positive rate being present no conclusions can be drawn from this comment. 
+See the file \texttt{guide\_to\_visualising.pdf} for further information and guidance.
 
-Finally, they commented that there was a 'bleaching affect' when looking at the central stimulus for too long. Likely referring to an afterimage, the shape of the central stimulus continues to follow the users gaze while the area of the retina that was desensitised by this central stimulus adjusts to a new light input. They suggested that the central stimulus change shape as so this affect is mitigated. 
 
-Based off their evaluation in the survey (see \ref{appendix:full_survey_results}) we believe that the system is likely usable for users with ophthalmological conditions, and based off this limited result, does produce a result not dissimilar to standard testing. Again due to the small sample size further evaluation is needed to definitively make a conclusion. 
 
 %==================================================================================================================================
 \chapter{Conclusion and Further Work}    
@@ -916,7 +902,7 @@ Summarise the whole project for a lazy reader who didn't read the rest (e.g. a p
 \section{Summary}
 \section{Future Work}
 \subsection{Quicker Testing Algorithm}
-Testing times in the project were found to be overly long by participants in the user evaluation. [IS THIS TRUE?] Therefore, there is potential future work in improving the speed of testing by refactoring the testing algorithm. HVF analyser algorithms such as SITA from the background could significantly reduce testing times. The algorithm could dynamically change the response time and random interval in between each stimulus depending on the user - or even remove stimuli if the program is confident the users visual field has no imperfections in that area.
+Testing times in the project were found to be overly long by participants in the user evaluation. [IS THIS TRUE?] Therefore, there is potential future work in improving the speed of testing by refactoring the testing algorithm. HVF analyser algorithms such as SITA from the background could significantly reduce testing times. The algorithm could dynamically change the response time and random interval inbetween each stimulus depending on the user - or even remove stimuli if the program is confident the users visual field has no imperfections in that area.
 
 \subsection{Threshold Testing}
 One primary element of HVF analyser testing that was not included in this project was threshold testing. As mentioned in the background, threshold testing refers to testing the level of light of a displayed stimulus that the user can see consistently. The light of the stimulus, measured logarithmically in decibels, would require a refactored testing algorithm as well as a function to handle translations between the logarithmic scale and Unity's linear scale. However by implementing threshold testing this could provide benefit by allowing operators to gauge the functional integrity of a patients retina and visual pathway.
@@ -1061,28 +1047,6 @@ All files have been uploaded to the L4-Project University of Glasgow Moodle, in 
     \centering
     \includegraphics[page=2,width=1\linewidth]{dissertation/images/Full results.pdf}   
     \caption{Full survey results from user evaluation. Part 2/2.}
-\end{figure}
-\newpage
-\subsection{Hemianopia} \label{appendix:hemianopia}
-We can see in figure \ref{fig:appendix_vfd} the visual field of a person with right-side homonymous hemianopia. The term homonymous hemianopia refers to a visual field defect where there is a visual field loss in the same half of both eyes. In this case it is in the right side of the visual field resulting from a lesion in the occipital lobe (\citep{walsh1992neuro}.
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.9\linewidth]{dissertation/images/Hemianopia_right.png}   
-    \caption{Results from a tangent field examination. Total right-side homonymous hemianopia. Retrieved from \citet{walsh1992neuro}.}
-    \label{fig:appendix_vfd}
-\end{figure}
-\newpage
-\subsection{Individual Study Report} \label{full_individual_study}
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[page=1,width=0.8\linewidth]{dissertation/images/individual_left_full.pdf}   
-    \caption{Full results from individual evaluation. Left eye}
-\end{figure}
-\newpage
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[page=1,width=0.8\linewidth]{dissertation/images/individual_right_full.pdf}   
-    \caption{Full results from individual evaluation. Right eye}
 \end{figure}
 \end{appendices}
 
