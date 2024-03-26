@@ -264,3 +264,99 @@ ___
 * *3 hours* Success! Eye tracking now uses eye data directly. Stimulus changes colour with new seperate script that is called when user looks at object. Also I now use mesh colliders, less efficient but more accurate.
 * *1.5 hours* Central stimulus now has three possible colours. Idle orange when the environment is waiting for you to activate scripts or testing is done. Green - testing is in progress you are looking at centre, and red - you are not looking at the centre but testing is in progress.
 * *1.5 hours* Testing now only begins when user clicks tracking pad with one of the controllers. 5 second delay. Eyetracking now also ceases when StimulusGenerator is done.
+
+#### 14th Wednesday
+* *8 hours* began scripting to process data
+
+#### 15th Thursday
+* *4 hours* first script is done, heatmap of user gaze done
+#### 16th Friday
+* *3.5 hours* worked on grayscale graphing script
+
+#### 17th Saturday
+* *2 hours* created invalid points script
+* *2 hours* more work on grayscale, hopefully almost done
+
+#### 18th Sunday
+* *2 hours* grayscale looks done
+* *6 hours* worked on pdf generator should be done soon
+
+## Week 7 : 19th Feb. - 25th Feb. : 2024
+#### 19th Monday
+* *2 hours* pdf generator finished
+* *6 hours* Worked on introduction, debrief and ethics checklist for user evaluation
+* *2 hours* First user studies done
+
+#### 21st Wednesday
+* *3 hours* four more user studies done
+* *3 hours* planned out background
+
+#### 23rd Friday
+* *3 hours* wrote title page and planned out subheadings, also worked on background
+* *3 hours* planned out background
+
+#### 25th Saturday
+* *3 hours* A lot of reading about visual field testing
+* *3 hours* A lot of reading about Virtual reality
+
+#### 26th Sunday
+* *1.5 hours* A lot less reading about visual field testing
+* *1.5 hours* A lot less reading about Virtual reality
+
+## Week 8 : 26th Feb. - 3rd Mar. : 2024
+#### 26th Monday
+* *8 hours* worked fully on background visual field testing. Next heading will be VR
+#### 28th Wednesday
+* *7 hours* finished visual field testing. Took much longer than expected and will require redraft
+* *3 hours* Got fed up of visual field testing and so started working on virtual reality 
+#### 29th Thursday
+* *4 hours* Went back to visual field testing, finished it up with paragraph on hemianopia
+* *5 hours* Now back to VR, mostly finished but chapter summary needs done
+#### 2nd Saturday
+* *8 hours* started analysis and requirements. Did problem statement
+
+## Week 9 : 4th Mar. - 10th Mar. : 2024
+#### 4th Monday
+* *8 hours* finished requirements and problem statement and a rough summary of chapter
+#### 6th Tuesday
+* *1 hour* finished summary of analysis/requirements
+* *1 hour* went back over background and redrafted
+* *3 hours* Spent rest of evening planning out and beginning design.
+#### 7th Thursday
+* *10 hours* Spent all day working on design, Know what I need to talk about now.
+#### 10th Sunday
+* *8 hours* Finished design. Includes nice graphs and visuals
+
+
+## Week 10 : 11th Mar. - 17th Mar. : 2024
+#### 11th Monday
+* *10 hours* Started implementation, got idea of subheadings and begin introduction and SDK paragraphsa
+#### 13th Wednesday
+* *5 hours* Bug with reports 'valid points' metrics spent time working on that. Also worked on implementation again
+* *5 hours* Spent a long time trying to fix the reports, seems to be good now but made a custom script so I could do them automatically.
+#### 14th Thursday
+* *6 hours* finished up work on file structure, made a visual of scene layout
+* *4 hours* working through implementation, did some nice graphs for work flow.
+#### 16th Saturday
+* *8 hours* finished implementation. proof read focusing on evaluation tomorrow.
+#### 17th Sunday
+* *4 hours* Didn't actually finish implementation, worked again on it, referencing SDKs also
+* *7 hours* rest of the evening spent on laying out evaluation and starting on introduction and method
+
+## Week 11 : 18th Mar. - 24th Mar. : 2024
+#### 18th Monday
+* *8 hours* Spent all day working on evaluation. Currently finished methedology
+#### 19th Tuesday
+* *8 hours* initial draft of abstract and finishing off methedology, also worked on further work
+#### 20th Wednesday
+* *2 hours* user evaluation with Paul
+#### 21nd Tuesday
+* *8 hours* spent time writing up user evalation results. focused on limitations and t-test
+#### 22nd Tuesday
+* *8 hours* t-test was a success, writing up pauls results and conclusion
+
+## Week 12 : 25th Mar. - 29th Mar. : 2024
+#### 26th Tuesday
+* *6 hours* Trying to make final project an executable. Major issues with SteamVR interaction when doing so as interaction logs are stored locally outwith the executable file path, so it wouldnt be carried on. Currently as it stands it is run through unity. Benefit of this is the tester can see users progress and output directorty of report.
+* *2 hours* Updating file structure. Includes updating readme's
+* *2 hours* Bunch of admin I need to do for project like commenting, more readme's and still trying to solve interaction issue from earlier.
