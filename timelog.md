@@ -360,3 +360,14 @@ ___
 * *6 hours* Trying to make final project an executable. Major issues with SteamVR interaction when doing so as interaction logs are stored locally outwith the executable file path, so it wouldnt be carried on. Currently as it stands it is run through unity. Benefit of this is the tester can see users progress and output directorty of report.
 * *2 hours* Updating file structure. Includes updating readme's
 * *2 hours* Bunch of admin I need to do for project like commenting, more readme's and still trying to solve interaction issue from earlier.
+
+#### 27th Wednesday
+* *8 hours* spent time formatting project dissertation, and redrafting diss again.
+
+#### 28th Thursday
+* *8 hours* did my presentation with slides and audio
+
+#### 29th Friday
+* *3 hours* formatting final bit of time log, repository and files to upload project
+
+
